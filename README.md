@@ -1,11 +1,39 @@
 # 🎮 Tetris 3D — Seasons Edition
 
 <p align="center">
-  <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge" alt="License: MIT">
-  <img src="https://img.shields.io/badge/Three.js-r128-black.svg?style=for-the-badge&logo=three.js" alt="Three.js r128">
-  <img src="https://img.shields.io/badge/Web_Audio_API-Procedural-emerald.svg?style=for-the-badge" alt="Web Audio API">
-  <img src="https://img.shields.io/badge/Mobile-Touch_&_Haptic-orange.svg?style=for-the-badge" alt="Mobile Ready">
-  <img src="https://img.shields.io/badge/Vanilla_JS-ES6+-F7DF1E.svg?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+  <a href="LICENSE">
+    <img src="https://img.shields.io/github/license/Vizquella/TST-Game?style=for-the-badge&logo=opensourceinitiative&logoColor=white&color=blue" alt="License: MIT">
+  </a>
+  <a href="https://github.com/Vizquella/TST-Game/commits/main">
+    <img src="https://img.shields.io/github/last-commit/Vizquella/TST-Game?style=for-the-badge&logo=git&logoColor=white&color=orange" alt="Last Commit">
+  </a>
+  <a href="https://github.com/Vizquella/TST-Game">
+    <img src="https://img.shields.io/github/repo-size/Vizquella/TST-Game?style=for-the-badge&logo=github&logoColor=white&color=purple" alt="Repo Size">
+  </a>
+  <a href="https://github.com/Vizquella/TST-Game/stargazers">
+    <img src="https://img.shields.io/github/stars/Vizquella/TST-Game?style=for-the-badge&logo=github&color=gold" alt="GitHub Stars">
+  </a>
+  <a href="https://github.com/Vizquella/TST-Game/issues">
+    <img src="https://img.shields.io/github/issues/Vizquella/TST-Game?style=for-the-badge&logo=github&color=brightgreen" alt="Issues">
+  </a>
+  <a href="https://github.com/Vizquella/TST-Game/network/members">
+    <img src="https://img.shields.io/github/forks/Vizquella/TST-Game?style=for-the-badge&logo=github&color=teal" alt="Forks">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://threejs.org/docs/" target="_blank">
+    <img src="https://img.shields.io/badge/Three.js-r128-black?style=for-the-badge&logo=three.js&logoColor=white" alt="Three.js Documentation">
+  </a>
+  <a href="https://www.w3.org/TR/webaudio/" target="_blank">
+    <img src="https://img.shields.io/badge/Web_Audio_API-W3C_Spec-059669?style=for-the-badge&logo=w3c&logoColor=white" alt="Web Audio API W3C Specification">
+  </a>
+  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
+    <img src="https://img.shields.io/badge/JavaScript-ES2020+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript MDN Docs">
+  </a>
+  <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API" target="_blank">
+    <img src="https://img.shields.io/badge/WebGL-2.0-990000?style=for-the-badge&logo=webgl&logoColor=white" alt="WebGL 2.0 API">
+  </a>
 </p>
 
 A lightweight, zero-dependency 3D Tetris game running purely in the browser. Built from scratch with **Three.js** and **vanilla JavaScript**, featuring 5 reactive seasonal environments, real-time procedural Web Audio soundscapes, standard Super Rotation System (SRS) mechanics, and full mobile touch & haptic controls.
