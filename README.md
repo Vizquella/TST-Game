@@ -4,24 +4,6 @@
   <a href="LICENSE">
     <img src="https://img.shields.io/github/license/Vizquella/TST-Game?style=for-the-badge&logo=opensourceinitiative&logoColor=white&color=blue" alt="License: MIT">
   </a>
-  <a href="https://github.com/Vizquella/TST-Game/commits/main">
-    <img src="https://img.shields.io/github/last-commit/Vizquella/TST-Game?style=for-the-badge&logo=git&logoColor=white&color=orange" alt="Last Commit">
-  </a>
-  <a href="https://github.com/Vizquella/TST-Game">
-    <img src="https://img.shields.io/github/repo-size/Vizquella/TST-Game?style=for-the-badge&logo=github&logoColor=white&color=purple" alt="Repo Size">
-  </a>
-  <a href="https://github.com/Vizquella/TST-Game/stargazers">
-    <img src="https://img.shields.io/github/stars/Vizquella/TST-Game?style=for-the-badge&logo=github&color=gold" alt="GitHub Stars">
-  </a>
-  <a href="https://github.com/Vizquella/TST-Game/issues">
-    <img src="https://img.shields.io/github/issues/Vizquella/TST-Game?style=for-the-badge&logo=github&color=brightgreen" alt="Issues">
-  </a>
-  <a href="https://github.com/Vizquella/TST-Game/network/members">
-    <img src="https://img.shields.io/github/forks/Vizquella/TST-Game?style=for-the-badge&logo=github&color=teal" alt="Forks">
-  </a>
-</p>
-
-<p align="center">
   <a href="https://threejs.org/docs/" target="_blank">
     <img src="https://img.shields.io/badge/Three.js-r128-black?style=for-the-badge&logo=three.js&logoColor=white" alt="Three.js Documentation">
   </a>
