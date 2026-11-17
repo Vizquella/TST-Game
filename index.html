@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tetris 3D - Multi-Theme (Christmas, Halloween, Summer, Storm, Spring)</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Local Three.js with CDN Fallback -->
+    <script src="lib/three.min.js"></script>
+    <script>
+        if (typeof THREE === 'undefined') {
+            document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+        }
+    </script>
+    <script src="lib/OrbitControls.js"></script>
+    <script>
+        if (typeof THREE !== 'undefined' && typeof THREE.OrbitControls === 'undefined') {
+            document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"><\/script>');
+        }
+    </script>
+</head>
+<body data-theme="christmas">
+    <div id="app-container">
+        <!-- 3D WebGL Canvas Layer -->
+        <div id="canvas-3d"></div>
+
+        <!-- Dynamic Celebration Toast -->
+        <div id="center-toast">TETRIS!</div>
+
+        <!-- UI Header -->
+        <header>
+            <div class="logo-area">
+                <span class="game-title">TETRIS</span>
+                <span class="badge-3d">3D</span>
+            </div>
+
+            <!-- Theme Switcher -->
+            <div class="theme-selector">
+                <button class="theme-btn active" data-theme="christmas">
+                    <span>🎄</span>
+                    <span class="label">Christmas</span>
+                </button>
+                <button class="theme-btn" data-theme="halloween">
+                    <span>🎃</span>
+                    <span class="label">Halloween</span>
+                </button>
+                <button class="theme-btn" data-theme="summer">
+                    <span>☀️</span>
+                    <span class="label">Summer</span>
+                </button>
+                <button class="theme-btn" data-theme="storm">
+                    <span>⚡</span>
+                    <span class="label">Storm</span>
+                </button>
+                <button class="theme-btn" data-theme="spring">
+                    <span>🌸</span>
+                    <span class="label">Spring</span>
+                </button>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="header-actions">
+                <button class="icon-btn" id="btn-cam-cycle" title="Ubah Sudut Kamera 3D">📷</button>
+                <button class="icon-btn active" id="btn-sfx" title="Toggle Sound FX">🔊</button>
+                <button class="icon-btn active" id="btn-bgm" title="Toggle Background Music">🎵</button>
+                <button class="icon-btn" id="btn-help" title="Panduan Kontrol">❓</button>
+            </div>
+        </header>
+
+        <!-- Main HUD Overlay Panels -->
+        <main>
+            <!-- Left Panel -->
+            <div class="panel left-panel">
+                <!-- Hold Piece Card -->
+                <div class="panel-card hold-card" id="hold-card-btn" title="Ketuk untuk Hold balok (C / Shift)">
+                    <div class="card-title">
+                        <span>HOLD</span>
+                        <span class="key-hint">C / Shift</span>
+                    </div>
+                    <div class="mini-canvas-container">
+                        <canvas id="hold-canvas" width="100" height="80"></canvas>
+                    </div>
+                </div>
+
+                <!-- Stats Card -->
+                <div class="panel-card stats-card">
+                    <div class="stat-row">
+                        <div class="stat-label">Score</div>
+                        <div class="stat-value highlight" id="stat-score">0</div>
+                    </div>
+                    <div class="stat-row">
+                        <div class="stat-label">High Score</div>
+                        <div class="stat-value" id="stat-high-score">0</div>
+                    </div>
+                    <div class="stat-row">
+                        <div class="stat-label">Lines</div>
+                        <div class="stat-value" id="stat-lines">0</div>
+                    </div>
+                    <div class="stat-row">
+                        <div class="stat-label">Level</div>
+                        <div class="stat-value" id="stat-level">1</div>
+                    </div>
+                </div>
+
+                <!-- Camera Angle Presets -->
+                <div class="panel-card camera-presets-card">
+                    <div class="card-title">Camera 3D</div>
+                    <div class="camera-presets-grid">
+                        <button class="preset-btn active" data-preset="default">3D Angled</button>
+                        <button class="preset-btn" data-preset="classic">Classic 2D</button>
+                        <button class="preset-btn" data-preset="isometric">Isometric</button>
+                        <button class="preset-btn" data-preset="top">Top View</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel -->
+            <div class="panel right-panel">
+                <!-- Next Pieces Card -->
+                <div class="panel-card next-card">
+                    <div class="card-title">NEXT</div>
+                    <div class="next-queue-list">
+                        <div class="next-item-box">
+                            <canvas id="next-canvas-1" width="90" height="55"></canvas>
+                        </div>
+                        <div class="next-item-box">
+                            <canvas id="next-canvas-2" width="90" height="55"></canvas>
+                        </div>
+                        <div class="next-item-box">
+                            <canvas id="next-canvas-3" width="90" height="55"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keyboard Guide Card -->
+                <div class="panel-card controls-guide-card">
+                    <div class="card-title">KONTROL</div>
+                    <div class="controls-guide-list">
+                        <div class="control-item">
+                            <span>Gerak Kiri / Kanan</span>
+                            <span class="kbd">← → / A D</span>
+                        </div>
+                        <div class="control-item">
+                            <span>Putar Searah Jarum</span>
+                            <span class="kbd">↑ / W / X</span>
+                        </div>
+                        <div class="control-item">
+                            <span>Putar Balik</span>
+                            <span class="kbd">Z</span>
+                        </div>
+                        <div class="control-item">
+                            <span>Soft Drop</span>
+                            <span class="kbd">↓ / S</span>
+                        </div>
+                        <div class="control-item">
+                            <span>Hard Drop (Instan)</span>
+                            <span class="kbd">Spasi</span>
+                        </div>
+                        <div class="control-item">
+                            <span>Tahan Balok (Hold)</span>
+                            <span class="kbd">C / Shift</span>
+                        </div>
+                        <div class="control-item">
+                            <span>Pause / Resume</span>
+                            <span class="kbd">P / Esc</span>
+                        </div>
+                        <div class="control-item">
+                            <span>Orbit Kamera 3D</span>
+                            <span class="kbd">Drag Mouse</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Virtual Touch Controls -->
+        <div id="mobile-controls">
+            <!-- Left Thumb Cluster (Movement & Drop) -->
+            <div class="touch-cluster dpad-cluster">
+                <button class="touch-btn dpad-btn" id="touch-left" aria-label="Move Left">
+                    <span>◀</span>
+                </button>
+                <button class="touch-btn dpad-btn" id="touch-down" aria-label="Soft Drop">
+                    <span>▼</span>
+                </button>
+                <button class="touch-btn dpad-btn" id="touch-right" aria-label="Move Right">
+                    <span>▶</span>
+                </button>
+            </div>
+
+            <!-- Right Thumb Cluster (Rotation & Drop) -->
+            <div class="touch-cluster action-cluster">
+                <div class="action-sub-row">
+                    <button class="touch-btn action-small" id="touch-hold" aria-label="Hold Piece" title="Hold Balok">
+                        <span>⤾</span>
+                    </button>
+                    <button class="touch-btn action-small" id="touch-rot-ccw" aria-label="Rotate Counter-Clockwise" title="Putar Balik (Z)">
+                        <span>↺</span>
+                    </button>
+                </div>
+                <div class="action-main-row">
+                    <button class="touch-btn action-large hard-drop-btn" id="touch-hard" aria-label="Hard Drop" title="Hard Drop Instan (Spasi)">
+                        <span>⚡</span>
+                    </button>
+                    <button class="touch-btn action-large rot-cw-btn" id="touch-rot-cw" aria-label="Rotate Clockwise" title="Putar (Up)">
+                        <span>↻</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Modal -->
+        <div class="modal-overlay" id="game-over-modal">
+            <div class="modal-dialog">
+                <div class="modal-title">GAME OVER</div>
+                <div class="modal-stats">
+                    <div class="modal-stats-row">
+                        <span>Final Score:</span>
+                        <span class="modal-stats-val" id="final-score">0</span>
+                    </div>
+                    <div class="modal-stats-row">
+                        <span>Lines Cleared:</span>
+                        <span class="modal-stats-val" id="final-lines">0</span>
+                    </div>
+                    <div class="modal-stats-row">
+                        <span>Max Level:</span>
+                        <span class="modal-stats-val" id="final-level">1</span>
+                    </div>
+                </div>
+                <button class="btn-primary" id="btn-restart-modal">MAIN LAGI (RESTART)</button>
+            </div>
+        </div>
+
+        <!-- Pause Modal -->
+        <div class="modal-overlay" id="pause-modal">
+            <div class="modal-dialog">
+                <div class="modal-title">PAUSED</div>
+                <p style="color: var(--text-muted); margin-bottom: 24px;">Permainan dijeda. Tekan tombol di bawah untuk melanjutkan.</p>
+                <button class="btn-primary" id="btn-resume-modal">LANJUTKAN (RESUME)</button>
+            </div>
+        </div>
+
+        <!-- Help / Info Modal -->
+        <div class="modal-overlay" id="help-modal">
+            <div class="modal-dialog">
+                <div class="modal-title">PANDUAN TETRIS 3D</div>
+                <div class="modal-stats" style="text-align: left; font-size: 13px; line-height: 1.6;">
+                    <p>🎮 <strong>Aturan Main:</strong> Susun balok tetromino agar membentuk garis horizontal penuh tanpa celah.</p>
+                    <p style="margin-top: 8px;">✨ <strong>Fitur Spesial:</strong></p>
+                    <ul style="padding-left: 18px; margin-top: 4px;">
+                        <li><strong>5 Tema Spektakuler:</strong> Christmas 🎄, Halloween 🎃, Summer ☀️, Storm (Badai Berpetir) ⚡, dan Spring (Bunga Bermekaran) 🌸. Masing-masing dilengkapi visual 3D, partikel animasi, dan efek suara procedural!</li>
+                        <li><strong>Kamera 3D Interaktif:</strong> Klik dan seret (drag) menggunakan mouse/layar sentuh untuk melihat board dari sudut manapun. Tersedia tombol preset kamera.</li>
+                        <li><strong>Super Rotation System (SRS):</strong> Wall kicks resmi untuk putaran halus di tepi dinding.</li>
+                        <li><strong>Ghost Piece:</strong> Proyeksi bayangan tembus pandang posisi jatuh balok.</li>
+                        <li><strong>Hold Piece:</strong> Simpan 1 balok cadangan untuk dipakai di momen darurat.</li>
+                    </ul>
+                </div>
+                <button class="btn-primary" id="btn-close-help">MENGERTI & MAIN</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Scripts -->
+    <script src="audio.js"></script>
+    <script src="tetris.js"></script>
+    <script src="renderer3d.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
